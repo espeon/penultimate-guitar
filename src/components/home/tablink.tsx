@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import SaveDialog from "../dialog/savedialog";
 import PlainButton from "../shared/plainbutton";
-import { TbHeart, TbHeartFilled } from "react-icons/tb";
+import { TbHeartFilled, TbHeart } from "react-icons/tb";
 
 type TabLinkProps = {
   tablink: TabLinkDto;
@@ -45,7 +45,7 @@ export default function TabLink({ tablink, recent }: TabLinkProps) {
             )}
         </Link>
         <PlainButton onClick={handleSave}>
-          <div className="flex items-center h-full">{!tablink.saved ? <TbHeart/> : <TbHeartFilled />}</div>
+          <div className="flex items-center h-full">{recent && !isSaved(tablink) ? <TbHeart/> : <TbHeartFilled />}</div>
         </PlainButton>
       </div>
       <SaveDialog

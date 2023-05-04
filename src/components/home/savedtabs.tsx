@@ -103,21 +103,18 @@ export default function SavedTabs() {
                       >
                         {({ open }) => (
                           <>
-                            <div className="py-2 inline-flex place-content-between w-full">
-                              <Disclosure.Button className="inline-flex">
-                                  <MdChevronRight
-                                    className={
-                                      open
-                                        ? "rotate-90 transition-transform ease-in-out text-xl mt-[0.35rem]"
-                                        : "transition-transform ease-in-out text-xl mt-[0.35rem]"
-                                    }
-                                  />
-                                  <span className="text-center text-xl">
-                                    {folder}
-                                  </span>
-                              </Disclosure.Button>
-                              {folderMenu(folder)}
-                            </div>
+                            <Disclosure.Button className="py-2 inline-flex">
+                              <MdChevronRight
+                                className={
+                                  open
+                                    ? "rotate-90 transition-transform ease-in-out text-xl mt-[0.35rem]"
+                                    : "transition-transform ease-in-out text-xl mt-[0.35rem]"
+                                }
+                              />
+                              <span className="text-center text-xl">
+                                {folder}
+                              </span>
+                            </Disclosure.Button>
                             <Disclosure.Panel className="flex flex-col gap-2 mt-2 fad">
                               {folders[folder].map((t, j) => (
                                 <TabLink
