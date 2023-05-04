@@ -85,7 +85,7 @@ export default function ChordText({
   return (
     <span className="group relative w-max">
       <span
-        className={`bg-gray-200 font-bold chord z-10 relative ${
+        className={`text-black dark:text-slate-200 font-bold chord z-10 relative dark:bg-slate-600 bg-slate-300 bg-opacity-80 ${
           chordObj && "cursor-pointer"
         }`}
       >{`${transposedKey}${suffix}`}</span>
@@ -97,7 +97,7 @@ export default function ChordText({
             top: -size - 5,
             left: -size / 2.5,
           }}
-          className="pointer-events-none absolute z-50 bg-white opacity-0 transition-opacity group-hover:opacity-100 border-black border-2 rounded"
+          className="pointer-events-none text-slate-700 absolute z-50 bg-slate-300 bg-opacity-90 opacity-0 transition-opacity group-hover:opacity-100 border-black border-2 rounded"
         >
           <div className="text-center chord">
             <span className="font-bold mr-2">
@@ -107,7 +107,7 @@ export default function ChordText({
               ({(inversion % (positions?.length ?? 0)) + 1}/{positions?.length})
             </span>
           </div>
-          <Chord chord={chordObj} instrument={instrument} lite={true} />
+          <Chord chord={chordObj} instrument={instrument} lite={false} />
         </div>
       )}
     </span>

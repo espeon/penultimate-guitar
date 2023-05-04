@@ -15,6 +15,15 @@ export default function TabSheet({
   fontSize,
   transposition,
 }: TabSheetProps) {
+  // TODO: remove when chords-db implements issue #24
+  // https://github.com/tombatossals/chords-db/issues/24
+  plainTab = plainTab.replace(/\[ch\]Cb/g, "[ch]B")
+  .replace(/\[ch\]Db/g, "[ch]C#")
+  .replace(/\[ch\]E#/g, "[ch]F")
+  .replace(/\[ch\]Fb/g, "[ch]E")
+  .replace(/\[ch\]Gb/g, "[ch]F#")
+  .replace(/\[ch\]A#/g, "[ch]Bb")
+  .replace(/\[ch\]B#/g, "[ch]C")
   const { width } = useWindowDimensions();
   const [formattedTab, setFormattedTab] = useState("");
   const [inversions, setInversions] = useState<{ [key: string]: number }>({});
@@ -51,12 +60,22 @@ export default function TabSheet({
   }, [width, fontSize]);
 
   useEffect(() => {
-    const allChords = plainTab.match(/\[ch\](.*?)\[\/ch\]/gm);
+    let aChords = plainTab.match(/\[ch\](.*?)\[\/ch\]/gm);
+
+    // hack: changing chords on the fly needs to either be done beforehand (risky!)
+    // or here and in the below useEffect
+    let allChords: string[] = []
+    aChords?.forEach(c => {
+      let r = c.replace(/Db/g, "C#")
+      if(r != c) allChords.push(c)
+      allChords.push(r)
+    })
     const allUniqueChords = [
       ...new Set(
-        allChords?.map((c) => c.replace("[ch]", "").replace("[/ch]", ""))
+        allChords?.map((c) => c?.replace("[ch]", "").replace("[/ch]", ""))
       ),
     ];
+    console.log(allUniqueChords)
     setInversions(() => {
       let newValue = {};
       Object.assign(newValue, ...allUniqueChords.map((k) => ({ [k]: 0 })));
@@ -82,8 +101,8 @@ export default function TabSheet({
               // working line excludes chord tags
               let workingLine = line
                 .replace(/\[ch\]/g, "")
-                .replace(/\[\/ch\]/g, "");
-
+                .replace(/\[\/ch\]/g, "")
+                
               const postCutoff = workingLine.slice(lineCutoff);
               if (postCutoff) {
                 // reinsert chord tags if necessary
@@ -120,11 +139,12 @@ export default function TabSheet({
         className="max-w-[100%] whitespace-pre-wrap"
         style={{ fontSize: `${fontSize}px` }}
       >
-        {reactStringReplace(formattedTab, /\[ch\](.+?)\[\/ch\]/gm, (match) => (
+        {reactStringReplace(formattedTab, /\[ch\](.+?)\[\/ch\]/gm, (match) => {
+          return (
           <span onClick={() => increaseInversion(match)}>
             {chordElements[match]}
           </span>
-        ))}
+        )})}
       </pre>
     </div>
   );

@@ -11,6 +11,7 @@ import {
   KeyboardEvent,
 } from "react";
 import DialogButton from "./dialogbutton";
+import { TbCheck, TbHeartFilled, TbPlus } from "react-icons/tb";
 
 type SaveDialogProps = {
   isOpen: boolean;
@@ -98,12 +99,12 @@ export default function SaveDialog({
       {currentFolders}
       <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
       <div className="fixed inset-0 flex items-center justify-center p-4">
-        <Dialog.Panel className="w-full max-w-xs rounded bg-white p-4">
-          <Dialog.Title>Save Tab to Folder</Dialog.Title>
+        <Dialog.Panel className="w-full max-w-xs rounded bg-white dark:bg-slate-800 p-4">
+          <Dialog.Title className="text-xl mb-3 flex"><TbHeartFilled className="mt-1 mr-1"/> tab in a folder</Dialog.Title>
           <Dialog.Description></Dialog.Description>
           <div className="flex flex-col">
             {folders.map((f, i) => (
-              <label key={i} className="w-full text-lg">
+              <label key={i} className="w-full text-md flex">
                 <input
                   type="checkbox"
                   value={f}
@@ -111,7 +112,7 @@ export default function SaveDialog({
                   checked={currentFolders.includes(f)}
                   onChange={handleFolderChange}
                 />{" "}
-                {f}
+                <div className="ml-2">{f}</div>
               </label>
             ))}
           </div>
@@ -123,7 +124,7 @@ export default function SaveDialog({
                     autoFocus
                     className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
                     type="text"
-                    placeholder="New folder..."
+                    placeholder="New folder name"
                     onBlur={addNew}
                     onKeyDown={handleKeyDown}
                     onChange={handleNewFolderChange}
@@ -136,12 +137,12 @@ export default function SaveDialog({
                       onClick={() => setAddingNew(true)}
                       disabled={false}
                     >
-                      New
+                      <TbPlus />
                     </DialogButton>
                   </div>
                   <div className="flex gap-4">
                     <DialogButton onClick={save} disabled={false}>
-                      Save
+                    <TbCheck />
                     </DialogButton>
                   </div>
                 </>

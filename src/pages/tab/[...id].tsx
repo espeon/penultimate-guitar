@@ -25,6 +25,10 @@ import { useRouter } from "next/router";
 import { Fragment, useEffect, useRef, useState } from "react";
 import "react-tooltip/dist/react-tooltip.css";
 
+import { MdTextDecrease, MdTextIncrease } from "react-icons/md"
+import { TbHeartFilled, TbMenu, TbMenu2, TbMinus, TbPlus } from "react-icons/tb";
+import { TbHeart, TbHeartBroken } from "react-icons/tb";
+
 const scrollMs = 100;
 
 type TabProps = {
@@ -33,7 +37,7 @@ type TabProps = {
 
 export default function Tab({ tabDetails }: TabProps) {
   const router = useRouter();
-  const { mode, setMode } = useGlobal();
+  const { mode, setMode, isSaved } = useGlobal();
   const { id } = router.query;
   const [fontSize, setFontSize] = useState(12);
   const [tranposition, setTranposition] = useState(
@@ -142,7 +146,7 @@ export default function Tab({ tabDetails }: TabProps) {
   let options = (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className={getToolbarButtonStyle(false)}>▼</Menu.Button>
+        <Menu.Button className={getToolbarButtonStyle(false)}><TbMenu2 /></Menu.Button>
       </div>
       <Transition
         as={Fragment}
@@ -268,25 +272,25 @@ export default function Tab({ tabDetails }: TabProps) {
         <hr className="my-4 no-print" />
 
         {tabDetails?.tab && (
-          <div className="bg-white/50 w-full sticky top-0 top-toolbar no-print z-40">
-            <div className="flex justify-between max-w-lg mx-auto my-4 gap-2 text-sm flex-wrap relative">
+          <div className="dark:bg-slate-800/80 bg-slate-100/80 py-2 mb-10 -mt-4 sticky top-0 no-print z-40 shadow-2xl dark:shadow-slate-800/90 shadow-slate-100/90">
+            <div className="flex justify-between max-w-lg mx-auto my-4 gap-2 text-xl flex-wrap relative">
               <div className="flex-1 flex-col text-center">
-                <p className="text-xs whitespace-nowrap">Font size</p>
+                <p className="text-sm whitespace-nowrap mb-1">Font size {fontSize==12?"":"("+ (fontSize > 12?"+":"")+(fontSize - 12)/2+")"}</p>
                 <div className="flex gap-1 m-auto w-fit">
                   <ToolbarButton
                     onClick={() => setFontSize(fontSize - 2)}
                     disabled={fontSize < 8}
                   >
-                    <span className="text-xs">A</span>
+                    <MdTextDecrease />
                   </ToolbarButton>
                   <ToolbarButton onClick={() => setFontSize(fontSize + 2)}>
-                    <span className="text-2xl">A</span>
+                    <MdTextIncrease />
                   </ToolbarButton>
                 </div>
               </div>
 
               <div className="flex-1 flex-col text-center">
-                <p className="text-xs whitespace-nowrap">
+                <p className="text-sm whitespace-nowrap mb-1">
                   {mode !== "guitalele" ? (
                     "Transpose"
                   ) : (
@@ -300,18 +304,18 @@ export default function Tab({ tabDetails }: TabProps) {
                   <ToolbarButton
                     onClick={() => setTranposition(tranposition - 1)}
                   >
-                    ➖
+                    <TbMinus />
                   </ToolbarButton>
                   <ToolbarButton
                     onClick={() => setTranposition(tranposition + 1)}
                   >
-                    ➕
+                    <TbPlus />
                   </ToolbarButton>
                 </div>
               </div>
 
               <div className="flex-1 flex-col text-center">
-                <p className="text-xs whitespace-nowrap">
+                <p className="text-sm whitespace-nowrap mb-1">
                   Autoscroll {scrollSpeed > 0 && ` (${scrollSpeed})`}
                 </p>
                 <div className="flex gap-1 m-auto w-fit">
@@ -319,17 +323,17 @@ export default function Tab({ tabDetails }: TabProps) {
                     onClick={() => changeScrolling("down")}
                     disabled={scrollSpeed < 1}
                   >
-                    ➖
+                    <TbMinus />
                   </ToolbarButton>
                   <ToolbarButton onClick={() => changeScrolling("up")}>
-                    ➕
+                    <TbPlus />
                   </ToolbarButton>
                 </div>
               </div>
               <div className="flex-1 flex-col text-center">
-                <p className="text-xs whitespace-nowrap">Options</p>
+                <p className="text-sm whitespace-nowrap mb-1">Options</p>
                 <div className="flex gap-1 m-auto w-fit">
-                  <ToolbarButton onClick={handleSave}>💾</ToolbarButton>
+                  <ToolbarButton onClick={handleSave}>{isSaved(tabLink)?<TbHeartFilled/>:<TbHeart />}</ToolbarButton>
                   {options}
                 </div>
               </div>
@@ -402,7 +406,7 @@ export async function getStaticPaths() {
     },
   });
 
-  const paths = savedTabs.map((tab) => ({
+  const paths = savedTabs.map((tab: { taburl: string; }) => ({
     params: { id: tab.taburl.split("/") },
   }));
 
@@ -425,7 +429,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const savedTab = await prisma.tab.findUnique({
       where: {
-        taburl: url,
+        taburl: url, 
       },
       include: {
         song: {

@@ -1,20 +1,22 @@
 import Link from "next/link";
 import SearchBox from "./search/searchbox";
+import ThemeSwitcher from "./shared/themes";
+import PlainButton from "./shared/plainbutton";
+
+import {TbGuitarPick, TbListSearch} from "react-icons/tb"
 
 export default function Header() {
   return (
     <div className="no-print">
       <div className="flex justify-between m-auto max-w-2xl">
-        <Link href="/">
-          <h1 className="m-auto w-fit font-bold">Penultimate Guitar</h1>
+        <Link href="/" className="dark:text-blue-300">
+          <TbGuitarPick size={"2.5rem"}/>
         </Link>
-        <div className="flex gap-6">
+        <div className="flex gap-3">
           <Link href="/directory">
-            <span className="m-auto w-fit">Song Directory</span>
+            <PlainButton children={<TbListSearch />}></PlainButton>
           </Link>
-          <Link href="https://notes.zachmanson.com/penultimate-guitar">
-            <span className="m-auto w-fit">About</span>
-          </Link>
+          <ThemeSwitcher />
         </div>
       </div>
       <SearchBox />

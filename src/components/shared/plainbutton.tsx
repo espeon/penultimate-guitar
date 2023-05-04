@@ -17,7 +17,7 @@ export default function PlainButton(props: {
 }) {
   return (
     <div
-      className="border-gray-200 bg-white border-2 p-4 rounded-xl  hover:border-gray-400 active:bg-gray-400 transition ease-in-out"
+      className="pt-3 inline-flex items-center dark:bg-slate-700 bg-slate-300 text-gray-800 hover:text-gray-80  dark:hover:bg-slate-500 dark:text-white dark:hover:text-white rounded-lg p-3 transition-all duration-300 ease-in-out"
       onClick={props.onClick}
     >
       {props.children}

@@ -21,10 +21,9 @@ export default function ToolbarButton({
 }
 
 export const getToolbarButtonStyle = (disabled: boolean) => `
-  border-gray-200 border-2 rounded-xl transition ease-in-out
-  flex items-center justify-center w-10 h-10 text-md text-lg 
+pt-3 inline-flex items-center dark:bg-slate-700 bg-slate-300 text-gray-800 dark:text-white rounded-lg p-3 h-9 w-9 transition-all duration-300 ease-in-out
   ${
     disabled
-      ? "opacity-10"
-      : "bg-white hover:border-gray-400 active:bg-gray-400"
+      ? "opacity-50"
+      : "dark:hover:text-white hover:text-gray-80  dark:hover:bg-slate-600 "
   }`;
