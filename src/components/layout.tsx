@@ -1,6 +1,8 @@
 import { useGlobal } from "@/contexts/Global/context";
 import Header from "./header";
 import LoadingSpinner from "./loadingspinner";
+import Link from "next/link";
+import { IoLogoGithub } from "react-icons/io";
 
 export default function Layout({ children }: any) {
   const { globalLoading } = useGlobal();
@@ -20,6 +22,17 @@ export default function Layout({ children }: any) {
         </div>
       )}
       <main>{children}</main>
+      <div className="flex justify-between m-auto max-w-2xl">
+        <div className="flex gap-3">
+          <Link href="https://github.com/espeon/penultimate-guitar">
+            <IoLogoGithub className="text-2xl" />
+          </Link>{" "}
+          <Link href="https://notes.zachmanson.com/penultimate-guitar/">
+            about
+          </Link>
+        </div>
+        <div />
+      </div>
     </>
   );
 }
