@@ -2,7 +2,7 @@ import React from 'react';
 import { useTheme } from 'next-themes'
 import { IoMdMoon, IoMdSunny } from 'react-icons/io'
 
-const themeSwitcher = () => {
+const ThemeSwitcher = () => {
   const { theme, setTheme } = useTheme();
   console.log(theme);
   const DarkLightIcon = theme == "dark" ? IoMdMoon : IoMdSunny
@@ -15,4 +15,4 @@ const themeSwitcher = () => {
   </button>
 }
 
-export default themeSwitcher;
+export default ThemeSwitcher;
