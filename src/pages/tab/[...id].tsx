@@ -26,8 +26,14 @@ import { useRouter } from "next/router";
 import { Fragment, useEffect, useRef, useState } from "react";
 import "react-tooltip/dist/react-tooltip.css";
 
-import { MdTextDecrease, MdTextIncrease } from "react-icons/md"
-import { TbHeartFilled, TbMenu, TbMenu2, TbMinus, TbPlus } from "react-icons/tb";
+import { MdTextDecrease, MdTextIncrease } from "react-icons/md";
+import {
+  TbHeartFilled,
+  TbMenu,
+  TbMenu2,
+  TbMinus,
+  TbPlus,
+} from "react-icons/tb";
 import { TbHeart, TbHeartBroken } from "react-icons/tb";
 
 const scrollMs = 100;
@@ -189,7 +195,9 @@ export default function Tab({ tabDetails }: TabProps) {
   let options = (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className={getToolbarButtonStyle(false)}><TbMenu2 /></Menu.Button>
+        <Menu.Button className={getToolbarButtonStyle(false)}>
+          <TbMenu2 />
+        </Menu.Button>
       </div>
       <Transition
         as={Fragment}
@@ -200,14 +208,14 @@ export default function Tab({ tabDetails }: TabProps) {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right divide-y divide-neutral-600 rounded-md bg-white dark:bg-gray-900 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="px-1 py-1 ">
             <Menu.Item>
               {({ active }) => (
                 <button
                   onClick={() => toggleMode()}
                   className={`${
-                    active ? "bg-blue-700 text-white" : "text-gray-900"
+                    active ? "bg-blue-700 text-white" : "text-gray-900 dark:text-gray-300"
                   } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                 >
                   {mode === "default" ? (
@@ -231,7 +239,7 @@ export default function Tab({ tabDetails }: TabProps) {
                 <button
                   onClick={() => print()}
                   className={`${
-                    active ? "bg-blue-700 text-white" : "text-gray-900"
+                    active ? "bg-blue-700 text-white" : "text-gray-900 dark:text-gray-300"
                   } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                 >
                   Print
@@ -243,7 +251,7 @@ export default function Tab({ tabDetails }: TabProps) {
                 <Link
                   href={`https://tabs.ultimate-guitar.com/tab/${tabDetails.taburl}`}
                   className={`${
-                    active ? "bg-blue-700 text-white" : "text-gray-900"
+                    active ? "bg-blue-700 text-white" : "text-gray-900 dark:text-gray-300"
                   } group flex w-full items-center rounded-md px-2 py-2 text-sm no-underline hover:text-white`}
                 >
                   View on Ultimate Guitar
@@ -312,85 +320,6 @@ export default function Tab({ tabDetails }: TabProps) {
             </div>
           )}
         </div>
-        <hr className="my-4 no-print" />
-
-        {tabDetails?.tab && (
-          <div className="dark:bg-slate-800/80 bg-slate-100/80 py-2 mb-10 -mt-4 sticky top-0 no-print z-40 shadow-2xl dark:shadow-slate-800/90 shadow-slate-100/90">
-            <div className="flex justify-between max-w-lg mx-auto xl:my-4 lg:my-2 my-0 gap-2 text-xl flex-wrap relative transition-all">
-              <div className="flex-1 flex-col text-center">
-                <p className="text-sm whitespace-nowrap mb-1">Font size {fontSize==12?"":"("+ (fontSize > 12?"+":"")+(fontSize - 12)/2+")"}</p>
-                <div className="flex gap-1 m-auto w-fit">
-                  <ToolbarButton
-                    onClick={() => setFontSize(fontSize - 2)}
-                    disabled={fontSize < 8}
-                  >
-                    <MdTextDecrease />
-                  </ToolbarButton>
-                  <ToolbarButton onClick={() => setFontSize(fontSize + 2)}>
-                    <MdTextIncrease />
-                  </ToolbarButton>
-                </div>
-              </div>
-
-              <div className="flex-1 flex-col text-center">
-                <p className="text-sm whitespace-nowrap mb-1">
-                  {mode !== "guitalele" ? (
-                    "Transpose"
-                  ) : (
-                    <span className={GuitaleleStyle}>Guitalele Mode!</span>
-                  )}
-                  {mode === "guitalele" ||
-                    tranposition === 0 ||
-                    ` (${formattedTransposition()})`}
-                </p>
-                <div className="flex gap-1 m-auto w-fit">
-                  <ToolbarButton
-                    onClick={() => setTranposition(tranposition - 1)}
-                  >
-                    <TbMinus />
-                  </ToolbarButton>
-                  <ToolbarButton
-                    onClick={() => setTranposition(tranposition + 1)}
-                  >
-                    <TbPlus />
-                  </ToolbarButton>
-                </div>
-              </div>
-
-              <div className="flex-1 flex-col text-center">
-                <p className="text-sm whitespace-nowrap mb-1">
-                  Autoscroll {scrollSpeed > 0 && ` (${scrollSpeed})`}
-                </p>
-                <div className="flex gap-1 m-auto w-fit">
-                  <ToolbarButton
-                    onClick={() => changeScrolling("down")}
-                    disabled={scrollSpeed < 1}
-                  >
-                    <TbMinus />
-                  </ToolbarButton>
-                  <ToolbarButton onClick={() => changeScrolling("up")}>
-                    <TbPlus />
-                  </ToolbarButton>
-                </div>
-              </div>
-              <div className="flex-1 flex-col text-center">
-                <p className="text-sm whitespace-nowrap mb-1">Options</p>
-                <div className="flex gap-1 m-auto w-fit">
-                  <ToolbarButton onClick={handleSave}>{isSaved(tabLink)?<TbHeartFilled/>:<TbHeart />}</ToolbarButton>
-                  {options}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        <TabSheet
-          plainTab={plainTab}
-          fontSize={fontSize}
-          transposition={tranposition}
-        ></TabSheet>
-
-        <hr className="my-4 no-print" />
         <div className="max-w-lg mx-auto my-4 no-print flex">
           <div>
             {!!tabDetails?.contributors?.length && (
@@ -411,6 +340,97 @@ export default function Tab({ tabDetails }: TabProps) {
             )}
           </div>
         </div>
+        <div className="grid justify-items-center grid-cols-1 no-print">
+          <div className="border-t dark:border-neutral-800 mb-12 mt-6 w-2/5" />
+        </div>
+        {tabDetails?.tab && (
+          <div className="md:grid grid-cols-1 justify-items-center sticky top-0 no-print z-40">
+            <div className="dark:bg-slate-800/80 bg-slate-100/80 py-2 mb-10 -mt-4 shadow-2xl dark:shadow-slate-800/90 shadow-slate-100/90 md:px-28 md:rounded-2xl rounded-b-2xl">
+              <div className="flex justify-between max-w-lg mx-auto my-4 lg:gap-12 md:gap-8 gap-2 text-xl flex-wrap relative">
+                <div className="flex-1 flex-col text-center">
+                  <p className="text-sm whitespace-nowrap mb-1">
+                    Font size{" "}
+                    {fontSize == 12
+                      ? ""
+                      : "(" +
+                        (fontSize > 12 ? "+" : "") +
+                        (fontSize - 12) / 2 +
+                        ")"}
+                  </p>
+                  <div className="flex gap-1 m-auto w-fit">
+                    <ToolbarButton
+                      onClick={() => setFontSize(fontSize - 2)}
+                      disabled={fontSize < 8}
+                    >
+                      <MdTextDecrease />
+                    </ToolbarButton>
+                    <ToolbarButton onClick={() => setFontSize(fontSize + 2)}>
+                      <MdTextIncrease />
+                    </ToolbarButton>
+                  </div>
+                </div>
+
+                <div className="flex-1 flex-col text-center">
+                  <p className="text-sm whitespace-nowrap mb-1">
+                    {mode !== "guitalele" ? (
+                      "Transpose"
+                    ) : (
+                      <span className={GuitaleleStyle}>Guitalele Mode!</span>
+                    )}
+                    {mode === "guitalele" ||
+                      tranposition === 0 ||
+                      ` (${formattedTransposition()})`}
+                  </p>
+                  <div className="flex gap-1 m-auto w-fit">
+                    <ToolbarButton
+                      onClick={() => setTranposition(tranposition - 1)}
+                    >
+                      <TbMinus />
+                    </ToolbarButton>
+                    <ToolbarButton
+                      onClick={() => setTranposition(tranposition + 1)}
+                    >
+                      <TbPlus />
+                    </ToolbarButton>
+                  </div>
+                </div>
+
+                <div className="flex-1 flex-col text-center">
+                  <p className="text-sm whitespace-nowrap mb-1">
+                    Autoscroll {scrollSpeed > 0 && ` (${scrollSpeed})`}
+                  </p>
+                  <div className="flex gap-1 m-auto w-fit">
+                    <ToolbarButton
+                      onClick={() => changeScrolling("down")}
+                      disabled={scrollSpeed < 1}
+                    >
+                      <TbMinus />
+                    </ToolbarButton>
+                    <ToolbarButton onClick={() => changeScrolling("up")}>
+                      <TbPlus />
+                    </ToolbarButton>
+                  </div>
+                </div>
+                <div className="flex-1 flex-col text-center">
+                  <p className="text-sm whitespace-nowrap mb-1">Options</p>
+                  <div className="flex gap-1 m-auto w-fit">
+                    <ToolbarButton onClick={handleSave}>
+                      {isSaved(tabLink) ? <TbHeartFilled /> : <TbHeart />}
+                    </ToolbarButton>
+                    {options}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <TabSheet
+          plainTab={plainTab}
+          fontSize={fontSize}
+          transposition={tranposition}
+        ></TabSheet>
+
         <SaveDialog
           isOpen={saveDialogActive}
           setIsOpen={setSaveDialogActive}
@@ -447,7 +467,7 @@ export async function getStaticPaths() {
     },
   });
 
-  const paths = savedTabs.map((tab: { taburl: string; }) => ({
+  const paths = savedTabs.map((tab: { taburl: string }) => ({
     params: { id: tab.taburl.split("/") },
   }));
 
