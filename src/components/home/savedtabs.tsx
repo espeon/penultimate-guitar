@@ -20,6 +20,8 @@ export default function SavedTabs() {
     }
   };
 
+  console.log(savedTabs)
+
   return (
     <div>
       {Object.keys(savedTabs).length === 0 || (

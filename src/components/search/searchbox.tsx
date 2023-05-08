@@ -100,8 +100,13 @@ export default function SearchBox() {
             type="search"
             id="default-search"
             name="url"
+<<<<<<< Updated upstream
             className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
             placeholder="Song name, Tab URL, or Spotify playlist URL..."
+=======
+            className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-100"
+            placeholder="Title, artist, or PG url"
+>>>>>>> Stashed changes
             required
             value={searchText}
             onChange={(e) => setLocalSearchText(e.target.value)}

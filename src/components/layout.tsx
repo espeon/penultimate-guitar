@@ -20,6 +20,20 @@ export default function Layout({ children }: any) {
         </div>
       )}
       <main>{children}</main>
+<<<<<<< Updated upstream
+=======
+      <div className="flex justify-between m-auto max-w-2xl mt-8">
+        <div className="flex gap-3">
+          <Link href="https://github.com/espeon/penultimate-guitar">
+            <IoLogoGithub className="text-2xl" />
+          </Link>{" "}
+          <Link href="https://notes.zachmanson.com/penultimate-guitar/">
+            about
+          </Link>
+        </div>
+        <div />
+      </div>
+>>>>>>> Stashed changes
     </>
   );
 }
