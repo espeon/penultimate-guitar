@@ -250,11 +250,14 @@ export default function Tab({ tabDetails }: TabProps) {
               {({ active }) => (
                 <Link
                   href={`https://tabs.ultimate-guitar.com/tab/${tabDetails.taburl}`}
+                <Link
+                  href={`https://tabs.ultimate-guitar.com/tab/${tabDetails.taburl}`}
                   className={`${
-                    active ? "bg-blue-700 text-white" : "text-gray-900 dark:text-gray-300"
+                    active ? "bg-blue-700 text-white" : "text-gray-900"
                   } group flex w-full items-center rounded-md px-2 py-2 text-sm no-underline hover:text-white`}
                 >
                   View on Ultimate Guitar
+                </Link>
                 </Link>
               )}
             </Menu.Item>
