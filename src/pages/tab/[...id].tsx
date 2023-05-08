@@ -344,6 +344,108 @@ export default function Tab({ tabDetails }: TabProps) {
           <div className="border-t dark:border-neutral-800 mb-12 mt-6 w-2/5" />
         </div>
         {tabDetails?.tab && (
+          <div className="dark:bg-slate-800/80 bg-slate-100/80 py-2 mb-10 -mt-4 sticky top-0 no-print z-40 shadow-2xl dark:shadow-slate-800/90 shadow-slate-100/90">
+            <div className="flex justify-between max-w-lg mx-auto xl:my-4 lg:my-2 my-0 gap-2 text-xl flex-wrap relative transition-all">
+              <div className="flex-1 flex-col text-center">
+                <p className="text-sm whitespace-nowrap mb-1">Font size {fontSize==12?"":"("+ (fontSize > 12?"+":"")+(fontSize - 12)/2+")"}</p>
+                <div className="flex gap-1 m-auto w-fit">
+                  <ToolbarButton
+                    onClick={() => setFontSize(fontSize - 2)}
+                    disabled={fontSize < 8}
+                  >
+                    <MdTextDecrease />
+                  </ToolbarButton>
+                  <ToolbarButton onClick={() => setFontSize(fontSize + 2)}>
+                    <MdTextIncrease />
+                  </ToolbarButton>
+                </div>
+              </div>
+
+                <div className="flex-1 flex-col text-center">
+                  <p className="text-sm whitespace-nowrap mb-1">
+                    {mode !== "guitalele" ? (
+                      "Transpose"
+                    ) : (
+                      <span className={GuitaleleStyle}>Guitalele Mode!</span>
+                    )}
+                    {mode === "guitalele" ||
+                      tranposition === 0 ||
+                      ` (${formattedTransposition()})`}
+                  </p>
+                  <div className="flex gap-1 m-auto w-fit">
+                    <ToolbarButton
+                      onClick={() => setTranposition(tranposition - 1)}
+                    >
+                      <TbMinus />
+                    </ToolbarButton>
+                    <ToolbarButton
+                      onClick={() => setTranposition(tranposition + 1)}
+                    >
+                      <TbPlus />
+                    </ToolbarButton>
+                  </div>
+                </div>
+
+                <div className="flex-1 flex-col text-center">
+                  <p className="text-sm whitespace-nowrap mb-1">
+                    Autoscroll {scrollSpeed > 0 && ` (${scrollSpeed})`}
+                  </p>
+                  <div className="flex gap-1 m-auto w-fit">
+                    <ToolbarButton
+                      onClick={() => changeScrolling("down")}
+                      disabled={scrollSpeed < 1}
+                    >
+                      <TbMinus />
+                    </ToolbarButton>
+                    <ToolbarButton onClick={() => changeScrolling("up")}>
+                      <TbPlus />
+                    </ToolbarButton>
+                  </div>
+                </div>
+                <div className="flex-1 flex-col text-center">
+                  <p className="text-sm whitespace-nowrap mb-1">Options</p>
+                  <div className="flex gap-1 m-auto w-fit">
+                    <ToolbarButton onClick={handleSave}>
+                      {isSaved(tabLink) ? <TbHeartFilled /> : <TbHeart />}
+                    </ToolbarButton>
+                    {options}
+                  </div>
+                </div>
+              </div>
+            </div>
+        )}
+
+        <TabSheet
+          plainTab={plainTab}
+          fontSize={fontSize}
+          transposition={tranposition}
+        ></TabSheet>
+
+        <hr className="my-4 no-print" />
+        <div className="max-w-lg mx-auto my-4 no-print flex">
+          <div>
+            {!!tabDetails?.contributors?.length && (
+              <details>
+                <summary>
+                  {tabDetails?.contributors?.length} Contributors
+                </summary>
+                <ul>
+                  {tabDetails?.contributors?.map((c, index) => (
+                    <li key={index}>
+                      <Link href={`https://www.ultimate-guitar.com/u/${c}`}>
+                        {c}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            )}
+          </div>
+        </div>
+        <div className="grid justify-items-center grid-cols-1 no-print">
+          <div className="border-t dark:border-neutral-800 mb-12 mt-6 w-2/5" />
+        </div>
+        {tabDetails?.tab && (
           <div className="md:grid grid-cols-1 justify-items-center sticky top-0 no-print z-40">
             <div className="dark:bg-slate-800/80 bg-slate-100/80 py-2 mb-10 -mt-4 shadow-2xl dark:shadow-slate-800/90 shadow-slate-100/90 md:px-28 md:rounded-2xl rounded-b-2xl">
               <div className="flex justify-between max-w-lg mx-auto my-4 lg:gap-12 md:gap-8 gap-2 text-xl flex-wrap relative">
