@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import SaveDialog from "../dialog/savedialog";
 import PlainButton from "../shared/plainbutton";
+import { TbHeart, TbHeartFilled } from "react-icons/tb";
 
 type TabLinkProps = {
   tablink: TabLinkDto;
@@ -29,43 +30,22 @@ export default function TabLink({ tablink, recent }: TabLinkProps) {
 
   return (
     <>
-      <div className="w-full flex mx-auto justify-between gap-2">
+      <div className="w-full text-black dark:text-white no-underline hover:no-underline active:text-black py-3 px-6 dark:bg-slate-700 bg-slate-300 dark:hover:bg-slate-600 transition-all rounded-lg flex">
         <Link
           href={`/tab/${tablink.taburl}`}
-          className="w-full text-black no-underline hover:no-underline active:text-black"
+          className="w-full h-full pt-2 text-black dark:text-slate-200 no-underline hover:no-underline active:text-black"
           prefetch={false}
         >
-<<<<<<< Updated upstream
-          <PlainButton>
-            <span className="font-bold">{tablink.name}</span> - {tablink.artist}
+            <span className="font-medium">{tablink.name}</span> - {tablink.artist}
             {tablink.version && (
-              <span className="font-light text-xs">
+              <span className="font-light text-sm">
                 {" "}
                 {tablink.type && `(${tablink.type})`} (v{tablink.version})
               </span>
             )}
-          </PlainButton>
         </Link>
         <PlainButton onClick={handleSave}>
-          <div className="flex items-center h-full">{recent ? "💾" : "❌"}</div>
-=======
-          <span className="font-medium">{tablink.name}</span> - {tablink.artist}
-          {tablink.version && (
-            <span className="font-light text-sm">
-              {" "}
-              {tablink.type && `(${tablink.type})`} (v{tablink.version})
-            </span>
-          )}
-        </Link>
-        <PlainButton onClick={handleSave}>
-          <div className="flex items-center h-full">
-            {savedTabs.find(({ taburl }) => taburl === tablink.taburl) ? (
-              <TbHeartFilled />
-            ) : (
-              <TbHeart />
-            )}
-          </div>
->>>>>>> Stashed changes
+          <div className="flex items-center h-full">{!tablink.saved ? <TbHeart/> : <TbHeartFilled />}</div>
         </PlainButton>
       </div>
       <SaveDialog

@@ -68,7 +68,7 @@ export default function Directory({ allTabs }: ListProps) {
             d.type = t.type;
             return (
               <div className="mb-4 font-sm">
-                <TabLink tablink={{ ...d, saved: s?.saved }} recent={false} />
+                <TabLink tablink={{ ...d, saved: s?.saved }} recent={false} key={i} />
               </div>
             );
           })}

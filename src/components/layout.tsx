@@ -1,6 +1,8 @@
 import { useGlobal } from "@/contexts/Global/context";
 import Header from "./header";
 import LoadingSpinner from "./loadingspinner";
+import Link from "next/link";
+import { IoLogoGithub } from "react-icons/io";
 
 export default function Layout({ children }: any) {
   const { globalLoading } = useGlobal();
@@ -20,8 +22,6 @@ export default function Layout({ children }: any) {
         </div>
       )}
       <main>{children}</main>
-<<<<<<< Updated upstream
-=======
       <div className="flex justify-between m-auto max-w-2xl mt-8">
         <div className="flex gap-3">
           <Link href="https://github.com/espeon/penultimate-guitar">
@@ -33,7 +33,6 @@ export default function Layout({ children }: any) {
         </div>
         <div />
       </div>
->>>>>>> Stashed changes
     </>
   );
 }

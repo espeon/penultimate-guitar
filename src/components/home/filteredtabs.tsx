@@ -26,23 +26,12 @@ export default function FilteredSavedTabs() {
         </>
       ) : (
         <div>
-<<<<<<< Updated upstream
-          <details open>
-            <summary>
-              <h1 className="text-center text-2xl my-4">
-                Favourites containing &quot;{searchText}&quot;
-              </h1>
-            </summary>
-            <div className="flex flex-col gap-2 mt-2">
-=======
           <span className="text-center text-2xl">Saved tabs with &quot;{searchText}&quot;</span>
               <div className="flex flex-col gap-2 mt-2">
->>>>>>> Stashed changes
               {filteredTabs.map((tab, i) => (
                 <TabLink key={i} tablink={{ ...tab, saved: true }} />
               ))}
             </div>
-          </details>
         </div>
       )}
       <p className="text-center">
