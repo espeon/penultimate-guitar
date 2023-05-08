@@ -2,13 +2,22 @@ import TabLink from "@/components/home/tablink";
 import { useGlobal } from "@/contexts/Global/context";
 import { convertToTabLink } from "@/lib/conversion";
 import prisma from "@/lib/prisma";
-import { TabDto, TabLinkDto } from "@/models/models";
+import { TabDto } from "@/models/models";
 import _ from "lodash";
+
+import { Song } from "@prisma/client";
+
 import Head from "next/head";
 import Link from "next/link";
 
 type ListProps = {
-  allTabs: TabDto[];
+  allTabs: {
+    songId: number;
+    taburl: string;
+    type: string;
+    version: number;
+    song: Song;
+  }[];
 };
 
 export default function Directory({ allTabs }: ListProps) {
