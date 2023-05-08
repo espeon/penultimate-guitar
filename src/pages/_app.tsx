@@ -89,7 +89,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
             />
 
             {"if you're looking, this is Plausible Analytics (plausible.io)"}
-            <script defer data-domain="pg.nat.vg" src="https://stats.ovy.sh/js/script.js"></script>
+            <Script defer data-domain="pg.nat.vg" src="https://stats.ovy.sh/js/script.js"></Script>
 
           </Head>
 

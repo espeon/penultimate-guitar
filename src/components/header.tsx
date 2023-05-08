@@ -3,7 +3,7 @@ import SearchBox from "./search/searchbox";
 import ThemeSwitcher from "./shared/themes";
 import PlainButton from "./shared/plainbutton";
 
-import {TbGuitarPick, TbListSearch} from "react-icons/tb"
+import { TbGuitarPick, TbListSearch } from "react-icons/tb";
 
 export default function Header() {
   return (

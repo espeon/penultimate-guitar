@@ -43,7 +43,7 @@ export default function RecentTabs() {
                   .map((r: TabLinkDto, i) => (
                     <TabLink
                       key={i}
-                      tablink={{ ...r, saved: true }}
+                      tablink={{ ...r }}
                       recent={true}
                     />
                   ))}
