@@ -2,9 +2,6 @@ import { TabLinkDto } from "@/models/models";
 import { useEffect, useState } from "react";
 import TabLink from "./tablink";
 
-import { Disclosure } from "@headlessui/react";
-import { MdChevronRight } from "react-icons/md";
-
 export default function RecentTabs() {
   const [recents, setRecents] = useState<TabLinkDto[]>([]);
 
@@ -31,6 +28,25 @@ export default function RecentTabs() {
   return (
     <div>
       {Object.keys(recents).length > 0 ? (
+<<<<<<< Updated upstream
+        <details open>
+          <summary>
+            <h1 className="text-center text-2xl my-4">Recent Tabs</h1>
+          </summary>
+          <div className="flex flex-col gap-2 mt-2">
+            {recents
+              .slice(0, 10)
+              .filter((r) => r.name && r.artist)
+              .map((r: TabLinkDto, i) => (
+                <TabLink
+                  key={i}
+                  tablink={{ ...r, saved: true }}
+                  recent={true}
+                />
+              ))}
+          </div>
+        </details>
+=======
         <Disclosure defaultOpen={true}>
           {({ open }) => (
             <>
@@ -44,7 +60,7 @@ export default function RecentTabs() {
                   .map((r: TabLinkDto, i) => (
                     <TabLink
                       key={i}
-                      tablink={{ ...r, saved: true }}
+                      tablink={{ ...r }}
                       recent={true}
                     />
                   ))}
@@ -52,6 +68,7 @@ export default function RecentTabs() {
             </>
           )}
         </Disclosure>
+>>>>>>> Stashed changes
       ) : (
         <p className="text-center">Saved and recent tabs will show up here!</p>
       )}

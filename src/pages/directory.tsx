@@ -2,10 +2,8 @@ import TabLink from "@/components/home/tablink";
 import { useGlobal } from "@/contexts/Global/context";
 import { convertToTabLink } from "@/lib/conversion";
 import prisma from "@/lib/prisma";
-import { TabDto } from "@/models/models";
-import _ from "lodash";
-
 import { Song } from "@prisma/client";
+import _ from "lodash";
 
 import Head from "next/head";
 import Link from "next/link";
@@ -40,6 +38,8 @@ export default function Directory({ allTabs }: ListProps) {
       multipleVersions[tab.songId] = true;
     }
   }
+
+  console.log(savedTabs)
   return (
     <>
       <Head>
