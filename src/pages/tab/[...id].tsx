@@ -45,10 +45,12 @@ export default function Tab({ tabDetails }: TabProps) {
   );
   const [scrollSpeed, setScrollSpeed] = useState(0);
   const scrollinterval = useRef<NodeJS.Timer>();
+  const isTouching = useRef(false);
   const [saveDialogActive, setSaveDialogActive] = useState(false);
 
   const plainTab = tabDetails.tab;
   const tabLink = convertToTabLink(tabDetails);
+
   useEffect(() => {
     const recents: any = JSON.parse(localStorage?.getItem("recents") || "{}");
     if (Array.isArray(recents)) {
@@ -97,7 +99,7 @@ export default function Tab({ tabDetails }: TabProps) {
 
   useEffect(() => {
     if (scrollSpeed > 0) {
-      let speed = Math.abs(scrollMs * 5/scrollSpeed)
+      let speed = Math.abs(scrollMs * 3/scrollSpeed)
       scrollinterval.current = setInterval(
         () =>
           window.scrollBy({
@@ -120,6 +122,19 @@ export default function Tab({ tabDetails }: TabProps) {
   useEffect(() => {
     if (mode === "guitalele") setTranposition(-5);
   }, [mode, setTranposition]);
+
+  useEffect(() => {
+    const onTouch = () => (isTouching.current = true);
+    const onTouchEnd = () =>
+      setTimeout(() => (isTouching.current = false), 1000);
+    window.addEventListener("touchstart", onTouch);
+    window.addEventListener("touchend", onTouchEnd);
+
+    return () => {
+      window.removeEventListener("touchstart", onTouch);
+      window.removeEventListener("touchend", onTouchEnd);
+    };
+  }, []);
 
   const handleSave = () => {
     setSaveDialogActive(true);
