@@ -97,14 +97,15 @@ export default function Tab({ tabDetails }: TabProps) {
 
   useEffect(() => {
     if (scrollSpeed > 0) {
+      let speed = Math.abs(scrollMs * 5/scrollSpeed)
       scrollinterval.current = setInterval(
         () =>
           window.scrollBy({
-            top: scrollSpeed,
+            top: 1,
             left: 0,
             behavior: "smooth",
           }),
-        scrollMs
+        speed
       );
     }
     return () => {
@@ -225,13 +226,13 @@ export default function Tab({ tabDetails }: TabProps) {
         </title>
       </Head>
       <>
-        <h1 className="text-center text-2xl my-4">
+        <h1 className="text-center text-2xl mt-8 mb-4">
           <span className="font-medium">{tabDetails.song.name}</span>
           <span className="font-light">{` ${
             tabDetails.song.artist && "- " + tabDetails.song.artist
           }`}</span>
         </h1>
-        <div className="max-w-lg mx-auto my-4">
+        <div className="max-w-lg mx-auto my-8">
           {(tabDetails?.song?.Tab?.length ?? 1) > 1 && (
             <details className="no-print">
               <summary>
@@ -269,7 +270,7 @@ export default function Tab({ tabDetails }: TabProps) {
 
         {tabDetails?.tab && (
           <div className="dark:bg-slate-800/80 bg-slate-100/80 py-2 mb-10 -mt-4 sticky top-0 no-print z-40 shadow-2xl dark:shadow-slate-800/90 shadow-slate-100/90">
-            <div className="flex justify-between max-w-lg mx-auto my-4 gap-2 text-xl flex-wrap relative">
+            <div className="flex justify-between max-w-lg mx-auto xl:my-4 lg:my-2 my-0 gap-2 text-xl flex-wrap relative transition-all">
               <div className="flex-1 flex-col text-center">
                 <p className="text-sm whitespace-nowrap mb-1">Font size {fontSize==12?"":"("+ (fontSize > 12?"+":"")+(fontSize - 12)/2+")"}</p>
                 <div className="flex gap-1 m-auto w-fit">

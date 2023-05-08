@@ -12,12 +12,13 @@ export default function Header() {
         <Link href="/" className="dark:text-blue-300">
           <TbGuitarPick size={"2.5rem"} />
         </Link>
-        <div className="flex gap-6">
+        <div className="flex gap-2">
           <Link href="/directory">
             <PlainButton>
               <TbListSearch />
             </PlainButton>
           </Link>
+          <ThemeSwitcher />
         </div>
       </div>
       <SearchBox />

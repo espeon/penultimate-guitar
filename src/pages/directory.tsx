@@ -2,6 +2,7 @@ import TabLink from "@/components/home/tablink";
 import { useGlobal } from "@/contexts/Global/context";
 import { convertToTabLink } from "@/lib/conversion";
 import prisma from "@/lib/prisma";
+import { TabDto } from "@/models/models";
 import { Song } from "@prisma/client";
 import _ from "lodash";
 
@@ -9,13 +10,7 @@ import Head from "next/head";
 import Link from "next/link";
 
 type ListProps = {
-  allTabs: {
-    songId: number;
-    taburl: string;
-    type: string;
-    version: number;
-    song: Song;
-  }[];
+  allTabs: TabDto[];
 };
 
 export default function Directory({ allTabs }: ListProps) {
@@ -67,8 +62,8 @@ export default function Directory({ allTabs }: ListProps) {
             let d = convertToTabLink(t);
             d.type = t.type;
             return (
-              <div className="mb-4 font-sm">
-                <TabLink tablink={{ ...d, saved: s?.saved }} recent={false} key={i} />
+              <div className="mb-4 font-sm" key={i}>
+                <TabLink tablink={{ ...d, saved: s?.saved }} recent={false} />
               </div>
             );
           })}
