@@ -22,10 +22,7 @@ export default function Layout({ children }: any) {
         </div>
       )}
       <main>{children}</main>
-      <div className="grid justify-items-center grid-cols-1 no-print">
-        <div className="border-t dark:border-neutral-800 mb-6 mt-6 w-2/5" />
-      </div>
-      <div className="flex justify-between m-auto max-w-2xl mb-4 no-print">
+      <div className="flex justify-between m-auto max-w-2xl mt-8">
         <div className="flex gap-3">
           <Link href="https://github.com/espeon/penultimate-guitar">
             <IoLogoGithub className="text-2xl" />

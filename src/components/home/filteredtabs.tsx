@@ -26,7 +26,7 @@ export default function FilteredSavedTabs() {
         </>
       ) : (
         <div>
-          <span className="text-center text-2xl">Favourites containing "{searchText}"</span>
+          <span className="text-center text-2xl">Saved tabs with &quot;{searchText}&quot;</span>
               <div className="flex flex-col gap-2 mt-2">
               {filteredTabs.map((tab, i) => (
                 <TabLink key={i} tablink={{ ...tab, saved: true }} />

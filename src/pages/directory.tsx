@@ -62,8 +62,8 @@ export default function Directory({ allTabs }: ListProps) {
             let d = convertToTabLink(t);
             d.type = t.type;
             return (
-              <div className="mb-4 font-sm" key={i}>
-                <TabLink tablink={{ ...d, saved: s?.saved }} recent={false} />
+              <div className="mb-4 font-sm">
+                <TabLink tablink={{ ...d, saved: s?.saved }} recent={false} key={i} />
               </div>
             );
           })}
