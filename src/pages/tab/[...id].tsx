@@ -532,7 +532,7 @@ async function insertTab(song: Song, tab: NewTab, altVersions: AltVersion[]) {
           },
           update: {},
         })
-        .catch((e) => console.error("Song upsert error", e));
+        .catch((e) => console.error(`Error upserting song '${song.id}':`, e));
     }
 
     // insert tab
@@ -555,7 +555,7 @@ async function insertTab(song: Song, tab: NewTab, altVersions: AltVersion[]) {
           },
         })
         .then()
-        .catch((e) => console.error("Upsert failed", e));
+        .catch((e) => console.error(`Error upserting tab '${tab.taburl}':`, e));
 
       for (let altVersion of altVersions) {
         prisma.tab
@@ -576,7 +576,9 @@ async function insertTab(song: Song, tab: NewTab, altVersions: AltVersion[]) {
             update: {},
           })
           .then()
-          .catch((e) => console.error("Upsert failed", e));
+          .catch((e) =>
+            console.error(`Error upserting alt '${altVersion.taburl}':`, e)
+          );
       }
     }
   } catch (err) {
