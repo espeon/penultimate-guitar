@@ -503,7 +503,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         ...tab,
         song: { ...song, Tab: [...altVersions, tab] },
       };
-      insertTab(song, tab, altVersions);
+      insertTab(song, tab, altVersions).catch(() =>
+        console.error("Database error occured for", tab.taburl)
+      );
     }
   }
   if (!props.song.name) {
@@ -519,9 +521,9 @@ async function insertTab(song: Song, tab: NewTab, altVersions: AltVersion[]) {
   try {
     // upsert song
     if (!!song.id) {
-      // left as await since later tab insertion needs songId
-      await prisma.song
-        .upsert({
+      try {
+        // left as await since later tab insertion needs songId
+        await prisma.song.upsert({
           where: {
             id: song.id,
           },
@@ -531,8 +533,10 @@ async function insertTab(song: Song, tab: NewTab, altVersions: AltVersion[]) {
             artist: song.artist,
           },
           update: {},
-        })
-        .catch((e) => console.error(`Error upserting song '${song.id}':`, e));
+        });
+      } catch (e) {
+        console.error(`Error upserting song '${song.id}':`, e);
+      }
     }
 
     // insert tab
@@ -554,7 +558,6 @@ async function insertTab(song: Song, tab: NewTab, altVersions: AltVersion[]) {
             capo: tab.capo ?? 0,
           },
         })
-        .then()
         .catch((e) => console.error(`Error upserting tab '${tab.taburl}':`, e));
 
       for (let altVersion of altVersions) {
@@ -575,7 +578,6 @@ async function insertTab(song: Song, tab: NewTab, altVersions: AltVersion[]) {
             },
             update: {},
           })
-          .then()
           .catch((e) =>
             console.error(`Error upserting alt '${altVersion.taburl}':`, e)
           );
