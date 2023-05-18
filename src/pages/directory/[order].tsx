@@ -8,6 +8,7 @@ import _ from "lodash";
 
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 type ListProps = {
   allTabs: TabDto[];
@@ -73,8 +74,41 @@ export default function Directory({ allTabs }: ListProps) {
   );
 }
 
-export async function getStaticProps() {
-  const savedTabs = await prisma.tab.findMany({
+export async function getStaticPaths() {
+  const paths = [
+    { params: { order: "artist" } },
+    { params: { order: "new" } },
+    { params: { order: "old" } },
+  ];
+
+  return { paths, fallback: "blocking" };
+}
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  let order = params?.order ?? "artist";
+  let orderBy =
+    order === "artist"
+      ? [
+          {
+            song: {
+              artist: "asc",
+            },
+          },
+          {
+            song: {
+              name: "asc",
+            },
+          },
+          {
+            type: "asc",
+          },
+          {
+            version: "asc",
+          },
+        ]
+      : {};
+
+  let savedTabs = await prisma.tab.findMany({
     where: {
       tab: {
         not: "ALT",
@@ -87,28 +121,15 @@ export async function getStaticProps() {
       version: true,
       song: true,
     },
-    orderBy: [
-      {
-        song: {
-          artist: "asc",
-        },
-      },
-      {
-        song: {
-          name: "asc",
-        },
-      },
-      {
-        type: "asc",
-      },
-      {
-        version: "asc",
-      },
-    ],
+    orderBy,
   });
+
+  if (order == "new") {
+    savedTabs = savedTabs.reverse();
+  }
 
   return {
     props: { allTabs: savedTabs },
     revalidate: 60,
   };
-}
+};
