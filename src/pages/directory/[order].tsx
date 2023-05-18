@@ -8,7 +8,7 @@ import _ from "lodash";
 
 import Head from "next/head";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/router";
 
 type ListProps = {
   allTabs: TabDto[];
@@ -43,10 +43,28 @@ export default function Directory({ allTabs }: ListProps) {
       </Head>
       <div className="max-w-xl mx-auto flex flex-col gap-2 my-8">
         <div className="mx-x">
-          <div className="text-2xl mb-2">
             {searchText.length > 0
               ? 'Searching for "' + searchText + '" in the directory'
               : "Directory"}
+          <select
+            className="p-2 rounded-md float-right"
+            name="order"
+            id="order"
+            defaultValue={router.query.order}
+            onChange={(e) => router.push(`/directory/${e.target.value}`)}
+          >
+            <option key="artist" value="artist">
+              By artist
+            </option>
+            <option key="new" value="new">
+              By newest
+            </option>
+            <option key="old" value="old">
+              By oldest
+            </option>
+          </select>
+          <div>
+            {Object.keys(multipleVersions).length} songs, {allTabs.length} tabs
           </div>
           <div className="mb-4">
             There are {Object.keys(multipleVersions).length} songs,{" "}
