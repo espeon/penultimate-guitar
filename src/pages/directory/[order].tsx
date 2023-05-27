@@ -124,7 +124,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             version: "asc",
           },
         ]
-      : {};
+      : [
+          {
+            timestamp: "asc",
+          },
+        ];
 
   let savedTabs = await prisma.tab.findMany({
     where: {
@@ -139,7 +143,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       version: true,
       song: true,
     },
-    orderBy,
+    orderBy: orderBy as any,
   });
 
   if (order == "new") {
