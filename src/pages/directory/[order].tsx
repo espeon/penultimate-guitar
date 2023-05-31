@@ -11,7 +11,14 @@ import Link from "next/link";
 import router, { useRouter } from "next/router";
 
 type ListProps = {
-  allTabs: TabDto[];
+  allTabs: {
+    songId: number;
+    taburl: string;
+    type: string;
+    version: number;
+    song: Song;
+    timestamp: string;
+  }[];
 };
 
 export default function Directory({ allTabs }: ListProps) {
@@ -23,7 +30,14 @@ export default function Directory({ allTabs }: ListProps) {
         t.song.name.toLowerCase().includes(lowerSearchText) ||
         t.song.artist.toLowerCase().includes(lowerSearchText)
     ),
-    (t: TabDto) => t.taburl
+    (t: {
+      songId: number;
+      taburl: string;
+      type: string;
+      version: number;
+      song: Song;
+      timestamp: string;
+    }) => t.taburl
   );
 
   const multipleVersions: { [key: string]: boolean } = {};
@@ -124,11 +138,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             version: "asc",
           },
         ]
-      : [
-          {
-            timestamp: "asc",
-          },
-        ];
+      : {};
 
   let savedTabs = await prisma.tab.findMany({
     where: {
@@ -142,8 +152,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       type: true,
       version: true,
       song: true,
+      timestamp: true,
     },
-    orderBy: orderBy as any,
+    orderBy,
   });
 
   if (order == "new") {
