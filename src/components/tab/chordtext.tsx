@@ -87,7 +87,7 @@ export default function ChordText({
 
   let chordsDBConvertedKey = KEY_MAP[transposedKey] ?? transposedKey;
   let positions = chordsDB?.chords[
-    chordsDBConvertedKey.replace("#", "sharp")
+    chordsDBConvertedKey?.replace("#", "sharp")
   ]?.find((c) => c.suffix === chordSuffix)?.positions;
   let chordObj = positions
     ? positions[inversion % positions.length]
