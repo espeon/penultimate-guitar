@@ -17,6 +17,7 @@ type TabMetadata = {
   version: number;
   song: Song;
   timestamp: string;
+  rating: number;
 };
 
 type ListProps = {
@@ -29,20 +30,21 @@ export default function Directory({ allTabs }: ListProps) {
   const { searchText, setSearchText } = useGlobal();
 
   const [collapseVersions, setCollapseVersions] = useState(
-    router.query.order === "artist"
+    true
+    //router.query.order === "artist"
   );
 
   useEffect(() => {
     setSearchText("");
   }, [setSearchText]);
 
-  useEffect(() => {
-    if (router.query.order === "artist") {
-      setCollapseVersions(true);
-    } else {
-      setCollapseVersions(false);
-    }
-  }, [router.query]);
+  //useEffect(() => {
+  //if (router.query.order === "artist") {
+  //    setCollapseVersions(true);
+  //  } else {
+  //    setCollapseVersions(false);
+  //  }
+  //}, [router.query]);
 
   if (searchText.length >= 3) {
     let lowerSearch = searchText.toLowerCase();
@@ -55,12 +57,23 @@ export default function Directory({ allTabs }: ListProps) {
 
   const groupedOrder: number[] = [];
   const groupedVersions: { [key: string]: TabMetadata[] } = {};
+  const topResults: { [key: string]: TabMetadata } = {};
   for (let tab of allTabs) {
     if (groupedVersions[tab.songId] === undefined) {
       groupedVersions[tab.songId] = [tab];
       groupedOrder.push(tab.songId);
     } else {
       groupedVersions[tab.songId].push(tab);
+    }
+    if (topResults[tab.songId] === undefined) {
+      topResults[tab.songId] = tab;
+    } else if (
+      topResults[tab.songId].type == "Tab" ||
+      topResults[tab.songId].type == "Chords"
+        ? topResults[tab.songId].rating + 3
+        : topResults[tab.songId].rating < tab.rating
+    ) {
+      topResults[tab.songId] = tab;
     }
   }
 
@@ -90,8 +103,15 @@ export default function Directory({ allTabs }: ListProps) {
           ) : (
             <details>
               <summary>
-                {groupedVersions[songId][0].song.artist} -{" "}
-                {groupedVersions[songId][0].song.name}{" "}
+                <Link
+                  href={"/tab/" + topResults[songId].taburl}
+                  prefetch={false}
+                  title={topResults[songId].timestamp}
+                  className="color-unset"
+                >
+                  {groupedVersions[songId][0].song.artist} -{" "}
+                  {groupedVersions[songId][0].song.name}{" "}
+                </Link>
                 <span className="font-light text-xs">
                   ({groupedVersions[songId].length} versions)
                 </span>
@@ -209,6 +229,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       version: true,
       song: true,
       timestamp: true,
+      rating: true,
     },
     orderBy,
   });

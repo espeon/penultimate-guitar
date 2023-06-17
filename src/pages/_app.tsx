@@ -10,6 +10,7 @@ import NProgress from "nprogress";
 import "../styles/nprogress.css";
 
 import { ThemeProvider } from "next-themes";
+import Script from "next/script";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
