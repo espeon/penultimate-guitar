@@ -3,6 +3,7 @@ import { TabLinkDto } from "@/models/models";
 import _ from "lodash";
 import Link from "next/link";
 import TabLink from "./tablink";
+import { TbHeartFilled } from "react-icons/tb";
 
 export default function FilteredSavedTabs() {
   const { savedTabs, searchText } = useGlobal();
@@ -26,7 +27,7 @@ export default function FilteredSavedTabs() {
         </>
       ) : (
         <div>
-          <span className="text-center text-2xl">Saved tabs with &quot;{searchText}&quot;</span>
+          <span className="text-center text-2xl flex"><span><TbHeartFilled className="mt-1"/></span>{" "} ed tabs including &quot;{searchText}&quot;</span>
               <div className="flex flex-col gap-2 mt-2">
               {filteredTabs.map((tab, i) => (
                 <TabLink key={i} tablink={{ ...tab, saved: true }} />
